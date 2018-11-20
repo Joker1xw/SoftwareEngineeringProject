@@ -33,9 +33,7 @@
 						&nbsp;&nbsp;&nbsp;
 						<a href="deleteCourse?id=${course.id}">Delete</a>
 						&nbsp;&nbsp;&nbsp;
-						<a href="addStudent?id=${course.id}">Add Student</a>	
-						&nbsp;&nbsp;&nbsp;
-						<a href="viewEnrollment?id=${course.id}">View Enrollment</a>											
+						<a href="enrollment?id=${course.id}">Enrollment</a>											
 					</td>
 	        	</tr>
 				</c:forEach>	        	

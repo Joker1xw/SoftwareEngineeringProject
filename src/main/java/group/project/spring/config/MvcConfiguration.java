@@ -14,6 +14,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import group.project.spring.dao.CourseDAO;
 import group.project.spring.dao.CourseDAOImpl;
+import group.project.spring.dao.EnrollmentDAO;
+import group.project.spring.dao.EnrollmentDAOImpl;
 
 @Configuration
 @ComponentScan(basePackages="group.project.spring")
@@ -47,5 +49,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
 	@Bean
 	public CourseDAO getCourseDAO() {
 		return new CourseDAOImpl(getDataSource());
+	}
+	
+	@Bean
+	public EnrollmentDAO getEnrollmentDAO() {
+		return new EnrollmentDAOImpl(getDataSource());
 	}
 }
