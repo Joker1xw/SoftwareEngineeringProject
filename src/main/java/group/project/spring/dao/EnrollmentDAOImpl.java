@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import group.project.spring.model.Course;
 import group.project.spring.model.Enrollment;
+import group.project.spring.model.Student;
 
 /**
  * An implementation of the EnrollmentDAO interface.
@@ -26,6 +27,39 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
+	@Override
+	public void save(int courseId, int studentId) {
+		
+	}
+	
+	@Override
+	public void delete(int courseId, int studentId) {
+		
+	}
+	
+	@Override
+	public List<Enrollment> getStudents(int courseId) {
+		
+		String sql = "SELECT 0 as course_Id, s.student_id , s.student_name "+
+				" FROM student s where s.student_id not in "+
+				" (select student_id from enrollment where course_id = " + courseId + ") ";
+		
+		List<Enrollment> list = jdbcTemplate.query(sql, new RowMapper<Enrollment>() {
+
+		@Override
+		public Enrollment mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Enrollment enrollment = new Enrollment();
+			enrollment.setCourseId(rs.getInt("course_id"));
+			enrollment.setStudentId(rs.getInt("student_id"));
+			enrollment.setStudentName(rs.getString("student_name"));
+			return enrollment;
+		}
+		
+	});
+	
+	return list;
+	}
+	
 	@Override
 	public List<Enrollment> getEnrollmentList(int courseId) {
 		

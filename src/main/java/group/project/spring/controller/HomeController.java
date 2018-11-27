@@ -1,7 +1,9 @@
 package group.project.spring.controller;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +18,7 @@ import group.project.spring.dao.CourseDAO;
 import group.project.spring.dao.EnrollmentDAO;
 import group.project.spring.model.Course;
 import group.project.spring.model.Enrollment;
+import group.project.spring.model.Student;
 
 /**
  * This controller routes accesses to the application to the appropriate
@@ -33,6 +36,15 @@ public class HomeController {
 	//Course
 	@RequestMapping(value="/")
 	public ModelAndView listCourse(ModelAndView model) throws IOException{
+		List<Course> listCourse = courseDAO.list();
+		model.addObject("listCourse", listCourse);
+		model.setViewName("home");
+		
+		return model;
+	}
+	
+	@RequestMapping(value="/backTolistCourse")
+	public ModelAndView backTolistCourse(ModelAndView model) throws IOException{
 		List<Course> listCourse = courseDAO.list();
 		model.addObject("listCourse", listCourse);
 		model.setViewName("home");
@@ -83,6 +95,45 @@ public class HomeController {
 		
 		return model;
 	}
+	
+	@RequestMapping(value = "/newEnroll", method = RequestMethod.GET)
+	public ModelAndView newEnroll(HttpServletRequest request) {
+		Enrollment newEnroll = new Enrollment();
 
+		int courseId = Integer.parseInt(request.getParameter("id"));
+		newEnroll.setCourseId(courseId);
+		Course course = courseDAO.get(courseId);
+		ModelAndView model = new ModelAndView("EnrollForm");
+		model.addObject("course", course);
+		model.addObject("enroll", newEnroll);
+		
+		Map<Integer,String> student = new LinkedHashMap<Integer,String>();
+		List<Enrollment> enrollmentList = enrollmentDAO.getStudents(courseId);
+		for (Enrollment enrollment : enrollmentList) {
+			student.put(enrollment.getStudentId(), enrollment.getStudentName());
+		}
+		model.addObject("studentList", student);
+	
+		return model;
+	}
 
+	@RequestMapping(value = "/saveEnroll", method = RequestMethod.POST)
+	public ModelAndView saveEnroll(HttpServletRequest request) {
+		int studentId = Integer.parseInt(request.getParameter("studentId"));
+		int courseId = Integer.parseInt(request.getParameter("courseId"));
+		System.out.println("add --> studentId: " + studentId
+						+ " to courseId: " + courseId);
+		enrollmentDAO.save(courseId, studentId);	
+		return new ModelAndView("redirect:/");
+	}
+	
+	@RequestMapping(value = "/removeStudent", method = RequestMethod.GET)
+	public ModelAndView removeStudent(HttpServletRequest request) {
+		int studentId = Integer.parseInt(request.getParameter("studentId"));
+		int courseId = Integer.parseInt(request.getParameter("courseId"));
+		System.out.println("remove --> studentId: " + studentId
+				+ " from courseId: " + courseId);
+		enrollmentDAO.delete(courseId, studentId);
+		return new ModelAndView("redirect:/");
+	}
 }
