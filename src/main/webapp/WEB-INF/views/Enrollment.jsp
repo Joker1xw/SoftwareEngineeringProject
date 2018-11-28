@@ -11,7 +11,7 @@
     </head>
     <body>
     	<div align="center">
-	        <h1>Enrollment</h1>
+	        <h1><i>Enrollment</i></h1>
 	        <h3><c:out value='${course.abbrev}' /> - <c:out value='${course.name}' /></h3>
 	        <table border="1">
 	        	<th>Student Id</th>

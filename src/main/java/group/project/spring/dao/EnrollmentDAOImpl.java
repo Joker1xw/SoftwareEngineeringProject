@@ -29,7 +29,14 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 
 	@Override
 	public void save(int courseId, int studentId) {
-		
+		// insert
+		String sql = "INSERT INTO enrollment (course_id"
+									 + ", student_id"
+									 + ")"
+					+ " VALUES (?, ?)";
+		jdbcTemplate.update(sql, courseId
+							, studentId
+							);
 	}
 	
 	@Override

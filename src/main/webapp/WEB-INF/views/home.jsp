@@ -10,7 +10,7 @@
     </head>
     <body>
     	<div align="center">
-	        <h1>Course Listing</h1>
+	        <h1><i>Course Listing</i></h1>
 	        <table border="1">
 	        	<th>Id</th>
 	        	<th>Course Nbr</th>
