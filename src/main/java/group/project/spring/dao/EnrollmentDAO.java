@@ -15,6 +15,8 @@ public interface EnrollmentDAO {
 	
 	public void delete(int courseId, int studentId);
 	
+	public void deleteAll(int courseId);
+	
 	public List<Enrollment> getStudents(int courseId);
 	
 	public List<Enrollment> getEnrollmentList(int courseId);

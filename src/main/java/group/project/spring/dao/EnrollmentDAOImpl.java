@@ -47,6 +47,13 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	}
 	
 	@Override
+	public void deleteAll(int courseId) {
+		String sql = "DELETE FROM enrollment WHERE course_id=?";
+		jdbcTemplate.update(sql, courseId);
+
+	}
+	
+	@Override
 	public List<Enrollment> getStudents(int courseId) {
 		
 		String sql = "SELECT 0 as course_Id, s.student_id , s.student_name "+

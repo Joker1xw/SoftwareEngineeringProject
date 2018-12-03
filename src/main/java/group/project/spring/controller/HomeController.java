@@ -70,6 +70,7 @@ public class HomeController {
 	public ModelAndView deleteCourse(HttpServletRequest request) {
 		int courseId = Integer.parseInt(request.getParameter("id"));
 		courseDAO.delete(courseId);
+		enrollmentDAO.deleteAll(courseId);
 		return new ModelAndView("redirect:/");
 	}
 	
