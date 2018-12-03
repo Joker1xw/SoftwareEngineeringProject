@@ -135,7 +135,7 @@ public class HomeController {
 		int courseId = Integer.parseInt(request.getParameter("courseId"));
 		System.out.println("add --> studentId: " + studentId
 						+ " to courseId: " + courseId);
-		enrollmentDAO.save(courseId, studentId);	
+		enrollmentDAO.saveEnroll(courseId, studentId);	
 		return new ModelAndView("redirect:/");
 	}
 	
