@@ -29,6 +29,7 @@
 	        	</tr>
 				</c:forEach>	        	
 			</table>
+			<h3 style='color: red'><b><c:out value='${errorMessage}'/></b></h3> 
  	  		<h4>
  	  		    <a href="backTolistCourse">Cancel</a>
  	  		    &nbsp;&nbsp;&nbsp;
