@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div align="center">
-		<h1>New/Edit Course</h1>
+		<h1><i>New/Edit Course</i></h1>
 		<form:form action="saveCourse" method="post" modelAttribute="course">
 		<table>
 			<form:hidden path="id"/>

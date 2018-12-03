@@ -90,32 +90,44 @@ public class HomeController {
 		List<Enrollment> listEnrollment = enrollmentDAO.getEnrollmentList(courseId);
 		Course course = courseDAO.get(courseId);
 		ModelAndView model = new ModelAndView("Enrollment");
+		model.addObject("errorMessage", "");
+		
 		model.addObject("course", course);
 		model.addObject("listEnrollment", listEnrollment);
 		
 		return model;
 	}
 	
-	@RequestMapping(value = "/newEnroll", method = RequestMethod.GET)
-	public ModelAndView newEnroll(HttpServletRequest request) {
-		Enrollment newEnroll = new Enrollment();
-
-		int courseId = Integer.parseInt(request.getParameter("id"));
-		newEnroll.setCourseId(courseId);
-		Course course = courseDAO.get(courseId);
-		ModelAndView model = new ModelAndView("EnrollForm");
-		model.addObject("course", course);
-		model.addObject("enroll", newEnroll);
-		
-		Map<Integer,String> student = new LinkedHashMap<Integer,String>();
-		List<Enrollment> enrollmentList = enrollmentDAO.getStudents(courseId);
-		for (Enrollment enrollment : enrollmentList) {
-			student.put(enrollment.getStudentId(), enrollment.getStudentName());
-		}
-		model.addObject("studentList", student);
-	
-		return model;
-	}
+	 @RequestMapping(value = "/newEnroll", method = RequestMethod.GET)
+	 public ModelAndView newEnroll(HttpServletRequest request) {
+	  Enrollment newEnroll = new Enrollment();
+	  int courseId = Integer.parseInt(request.getParameter("id"));
+	  Course course = courseDAO.get(courseId);
+	  List<Enrollment> listEnrollment = enrollmentDAO.getEnrollmentList(courseId);
+	  
+	  if (listEnrollment.size() >= 9) {
+	   ModelAndView model = new ModelAndView("Enrollment");
+	   model.addObject("errorMessage", "Class is Full! Cannot enroll anyone else.");
+	   model.addObject("course", course);
+	   model.addObject("listEnrollment", listEnrollment);
+	   return model;
+	  }
+	  
+	  //else, enroll the new student
+	  newEnroll.setCourseId(courseId);
+	  ModelAndView model = new ModelAndView("EnrollForm");
+	  model.addObject("course", course);
+	  model.addObject("enroll", newEnroll);
+	  
+	  Map<Integer,String> student = new LinkedHashMap<Integer,String>();
+	  List<Enrollment> enrollmentList = enrollmentDAO.getStudents(courseId);
+	  for (Enrollment enrollment : enrollmentList) {
+	   student.put(enrollment.getStudentId(), enrollment.getStudentName());
+	  }
+	  model.addObject("studentList", student);
+	 
+	  return model;
+	 }
 
 	@RequestMapping(value = "/saveEnroll", method = RequestMethod.POST)
 	public ModelAndView saveEnroll(HttpServletRequest request) {
