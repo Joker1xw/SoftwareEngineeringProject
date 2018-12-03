@@ -11,7 +11,7 @@ import group.project.spring.model.Student;
  */
 public interface EnrollmentDAO {
 	
-	public void save(int courseId, int studentId);
+	public void saveEnroll(int courseId, int studentId);
 	
 	public void delete(int courseId, int studentId);
 	

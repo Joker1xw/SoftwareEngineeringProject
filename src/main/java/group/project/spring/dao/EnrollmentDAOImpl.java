@@ -28,7 +28,7 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	}
 
 	@Override
-	public void save(int courseId, int studentId) {
+	public void saveEnroll(int courseId, int studentId) {
 		// insert
 		String sql = "INSERT INTO enrollment (course_id"
 									 + ", student_id"
@@ -41,7 +41,9 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 	
 	@Override
 	public void delete(int courseId, int studentId) {
-		
+		String sql = "DELETE FROM enrollment WHERE course_id=? and student_id=?";
+		jdbcTemplate.update(sql, courseId, studentId);
+
 	}
 	
 	@Override
